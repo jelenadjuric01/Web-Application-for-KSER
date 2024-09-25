@@ -1,0 +1,40 @@
+
+
+<div class="navbar text-center">
+  <div class="col">
+  <a routerLink="register">Registracija</a>
+  </div>
+  <div class="col">
+  <a routerLink="forgoten-password">Zaboravljena lozinka</a>
+  </div>
+
+</div>
+
+<br>
+<div class="container-fluid">
+<div class="loginMenu">
+  <div class="row">
+  <table>
+      <tr>
+          <td>Email:</td>
+          <td><input type="text" name="username" [(ngModel)]="username" [placeholder]="errorUsername" [class.invalid]="errorUsername"></td>
+      </tr>
+      <tr *ngIf="errorUsername!='Obavezno polje'" class="errorClass">
+        <td colspan="2">{{errorUsername}}</td>
+      </tr>
+      <tr>
+          <td>Lozinka:</td>
+          <td><input type="password" name="password" [(ngModel)]="password" [placeholder]="errorPassword" [class.invalid]="errorPassword"></td>
+      </tr>
+      <tr *ngIf="errorPassword!='Obavezno polje'" class="errorClass">
+        <td colspan="2">{{errorPassword}}</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><button mat-raised-button color="primary" (click)="confirmLogIn()">Uloguj se</button></td>
+          <td></td>
+      </tr>
+  </table>
+  </div>
+</div>
+</div>

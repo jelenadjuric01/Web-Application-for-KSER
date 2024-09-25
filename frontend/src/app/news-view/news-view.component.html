@@ -1,0 +1,29 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()" >Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div class="container-fluid text-center justify-content-left align-items-left full-height">
+  <h4>{{news.title}}</h4>
+  <p>{{news.timestamp | date:'dd/MM/yyyy HH:mm'}}</p>
+  <p>{{news.description}}</p>
+</div>

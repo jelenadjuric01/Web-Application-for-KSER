@@ -1,0 +1,86 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" >Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()">Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div class="container-fluid d-flex justify-content-center align-items-center full-height" *ngIf="notifications.length>0 && user.type!='admin'" >
+  <div>
+    <table *ngFor="let n of notifications">
+      <tr>
+       <td><h4>{{n.title}}</h4></td>
+      </tr>
+      <tr>
+        <td>{{ n.timestamp | date:'dd/MM/yyyy HH:mm' }}</td>
+
+      </tr>
+      <tr>
+       <td>{{n.description}}</td>
+      </tr>
+
+    </table>
+  </div>
+</div>
+<div class="notificationMenu" *ngIf="user.type!='admin' && notifications.length==0"> Trenutno nema obavestenja.</div>
+<br>
+<div class="container-fluid d-flex justify-content-center align-items-center full-height" *ngIf="user.type=='admin' && notifications.length>0">
+  <div>
+    <h4 class="text-center">Obavestenja</h4>
+
+
+  <table *ngFor="let n of notifications">
+    <tr>
+      <td>Naslov:</td>
+      <td><input type="text" [(ngModel)]="n.title" class="input-field" [class.invalid]="n.errorTitle" [placeholder]="n.errorTitle"></td>
+    </tr>
+    <tr>
+      <td>Tekst:</td>
+      <td><textarea [(ngModel)]="n.description" class="input-field" [class.invalid]="n.errorDescription" [placeholder]="n.errorDescription"></textarea></td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary" (click)="updateNotification(n)">Uredi</button></td>
+      <td><button mat-raised-button color="primary" (click)="deleteNotification(n)">Obrisi</button></td>
+
+    </tr>
+  </table>
+  </div>
+</div>
+<br>
+<h4 class="notificationMenu" *ngIf="user.type=='admin'">Dodaj obavestenje</h4>
+<div class="notificationMenu" *ngIf="user.type=='admin'">
+
+  <table>
+    <tr>
+      <td>Naslov:</td>
+      <td><input type="text" [(ngModel)]="title" class="input-field" [class.invalid]="errorTitle" [placeholder]="errorTitle"></td>
+    </tr>
+    <tr>
+      <td>Tekst:</td>
+      <td><textarea [(ngModel)]="description" class="input-field" [class.invalid]="errorDescription" [placeholder]="errorDescription"></textarea></td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary" (click)="addNotification()">Dodaj</button></td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="alertMessage" class="notificationMenu" [class.errorClass]="!addedNot" [class.successClass]="addedNot" >
+  {{alertMessage}}
+  </div>

@@ -1,0 +1,17 @@
+header {
+  height:55px;
+  padding-top: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-bottom: 5px;
+  background-color: whitesmoke;
+}
+
+
+
+
+
+.headerName {
+  float: right;
+}
+

@@ -1,0 +1,96 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()" >Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<h4 class="applyMenu" *ngIf="user.type=='admin'">Prijave su pustene za:</h4>
+
+<div class="applyMenu" *ngIf="user.type=='admin'">
+  <table>
+
+      <tr>
+        <td>Organizatore:</td>
+        <td><input type="checkbox" name="organizators" [(ngModel)] ="openForOrganizers" (change)="openAplications($event,0)"></td>
+        <tr>
+          <td>Ucesnike iz Srbije:</td>
+        <td> <input type="checkbox" name="participants" [(ngModel)] ="openForParticipants" (change)="openAplications($event,1)"></td>
+        </tr>
+        <tr>
+          <td>Ucesnike iz regiona:</td>
+        <td><input type="checkbox" name="foreings" [(ngModel)] ="openForForeings" (change)="openAplications($event,2)"></td>
+
+      </tr>
+      </table>
+
+</div>
+<h4 class="applyMenu" *ngIf="user.type=='admin'">Dostupni paketi i broj prijavljenih:</h4>
+
+<div class="applyMenu" *ngIf="user.type=='admin'">
+  <table >
+
+      <tr *ngFor="let p of packages">
+        <td style="padding-right: 20px;">{{p.name}}</td>
+        <td style="padding-right: 20px;"><input type="checkbox" name="package" [(ngModel)] ="p.available" (change)="changeAvaliability($event,p)"></td>
+        <td>{{appliedPackages.get(p.number)}}</td>
+
+      </tr>
+      </table>
+
+</div>
+<h4 class="applyMenu" *ngIf="user.type=='admin'">Broj registrovanih po fakultetima</h4>
+
+<div class="applyMenu" *ngIf="user.type=='admin' && faculties.length>0">
+  <table>
+
+      <tr *ngFor="let key of registerByFaculties.keys()">
+        <td >{{key}}</td>
+        <td>{{registerByFaculties.get(key)}}</td>
+
+      </tr>
+      </table>
+
+</div>
+
+<div *ngIf="user.type!='admin'" class="table-responsive">
+<table>
+  <tr>
+    <td>Paket:</td>
+    <td>
+    <select name="package" [(ngModel)]="packageP" class="input-field">
+      <option [value]="p.number"  *ngFor="let p of availablePackages" >{{p.name}}</option>
+      <option [value]="packageP" *ngIf="!packageAvailable(packageP)">{{findPackage()}}</option>
+    </select>
+    </td>
+    <td> <span *ngIf='errorPackage' class="errorClass">{{errorPackage}}</span></td>
+  </tr>
+  <tr>
+    <td>U sobi zelim da budem sa:</td>
+    <td><input type="text" name="roommates" [(ngModel)]="roommates" placeholder="Imena i prezimena" class="input-field"></td>
+    <td> <span *ngIf='errorRoommates' class="errorClass">{{errorRoommates}}</span></td>
+  </tr>
+  <tr>
+    <td colspan="2"><button mat-raised-button color="primary" (click)="apply()">Prijavi se</button></td>
+  </table>
+</div>
+<div class="applyMenu successClass" *ngIf="user.type!='admin' && alertMessage!=''">
+{{alertMessage}}
+</div>

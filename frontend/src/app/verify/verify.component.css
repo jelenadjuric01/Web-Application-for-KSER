@@ -1,0 +1,67 @@
+nav {
+  align-items: center;
+  display: flex;
+  gap: 3.5em;
+}
+
+.navT {
+  border-bottom: 2px solid grey;
+  color: grey;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  text-decoration: none;
+  transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -webkit-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -moz-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -o-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+}
+
+.navbar {
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.navbar .col {
+  flex: 1 1 auto; /* Allow columns to grow and shrink as needed */
+  text-align: center;
+  padding: 10px;
+}
+
+.navbar a {
+  border-bottom: 2px solid grey;
+  color: grey;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  text-decoration: none;
+  transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -webkit-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -moz-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -o-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+}
+
+.navbar a:hover {
+  border-bottom-color: red;
+  color: darkblue;
+}
+
+.verifyMenu{
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+
+
+.errorClass{
+  color: red;
+}
+
+.successClass{
+  color: green;
+}
+

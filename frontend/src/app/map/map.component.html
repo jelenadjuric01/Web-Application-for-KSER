@@ -1,0 +1,69 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()" >Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div id="map" class="map-container"></div>
+<br>
+<h4 class="mapMenu" *ngIf="user.type=='admin'">Dodaj oznacenu tacku</h4>
+
+<div *ngIf="user.type=='admin'" class="mapMenu">
+  <table>
+    <tr>
+      <td>Duzina nove tacke:</td>
+      <td><input type="number" [(ngModel)]="longitude" [class.invalid]="errorLongitude"></td>
+    </tr>
+    <tr>  <td colspan="2" *ngIf='errorLongitude' class="errorClass">{{errorLongitude}}</td>
+    </tr>
+    <tr>
+      <td>Sirina nove tacke:</td>
+      <td><input type="number" [(ngModel)]="latitude" [class.invalid]="errorLatitude"></td>
+    </tr>
+    <tr>  <td colspan="2" *ngIf='errorLatitude' class="errorClass">{{errorLatitude}}</td>
+    </tr>
+    <tr>
+      <td>Labela:</td>
+      <td><input type="text" [(ngModel)]="label" [class.invalid]="errorLabel"></td>
+    </tr>
+    <tr>  <td colspan="2" *ngIf='errorLabel' class="errorClass">{{errorLabel}}</td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary" (click)="addMark()">Dodaj tacku</button></td>
+    </tr>
+  </table>
+</div>
+<br>
+<div class="mapMenu" *ngIf="user.type=='admin'">
+  <table>
+    <tr>
+      <td>Obrisi tacku:</td>
+      <td><select [(ngModel)]="deleteM" class="input-field" [class.invalid]="errorMark">
+        <option *ngFor="let mark of marks" [value]="mark.label">{{mark.label}}</option>
+        <option *ngIf="errorMark" value="" disabled selected hidden>{{errorMark}}</option>
+
+      </select></td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary"(click)="deleteMark()">Obrisi</button></td>
+    </tr>
+  </table>
+</div>

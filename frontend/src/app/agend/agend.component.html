@@ -1,0 +1,121 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()" >Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div class="container-fluid d-flex justify-content-center align-items-center full-height" *ngIf="user.type!='admin' && agenda.length>0">
+  <div>
+  <table *ngFor="let a of agenda">
+    <tr>
+      <td>
+        Dan {{a.day}}
+      </td>
+    </tr>
+    <tr *ngFor="let i of a.items">
+      <td>{{returnTimeFormat(i.startHour)}}:{{returnTimeFormat(i.startMinute)}} - {{returnTimeFormat(i.endHour)}}:{{returnTimeFormat(i.endMinute)}} {{i.title}} {{i.lecturer}}</td>
+    </tr>
+
+  </table>
+</div>
+</div>
+
+<div class="table-responsive" *ngIf="user.type=='admin' && agenda.length>0">
+
+  <table *ngFor="let a of agenda">
+    <tr>
+      <td>
+        Vreme pocetka i kraja:
+      </td>
+      <td>Naslov:</td>
+      <td>Predavac:</td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        Dan {{a.day}}
+      </td>
+    </tr>
+    <tr *ngFor="let i of a.items">
+      <td><input type="time" [(ngModel)]="i.startTime" [class.invalid]="a.errorStartTime">-<input type="time" [(ngModel)]="i.endTime" [class.invalid]="a.errorEndTime"> </td><td> <input type="text" [(ngModel)]="i.title" [class.invalid]="a.errorTitle" [placeholder]="a.errorTitle"></td>
+        <td> <input type="text" [(ngModel)]="i.lecturer"> </td>
+        <td><button mat-raised-button color="primary" (click)="deleteAgend(a,i)">Obrisi</button></td>
+
+    </tr>
+    <tr><td colspan="4"><button mat-raised-button color="primary" (click)="updateAgend(a)">Promeni</button></td></tr>
+    <tr><td colspan="4" *ngIf="a.errorStartTime" class="errorClass">{{a.errorStartTime}}</td></tr>
+    <tr><td colspan="4" *ngIf="a.errorEndTime" class="errorClass">{{a.errorEndTime}}</td></tr>
+  </table>
+
+
+</div>
+<div *ngIf="alertMessage" class="agendMenu" [class.errorClass]="!updatedAgend" [class.successClass]="updatedAgend" >
+  {{alertMessage}}
+  </div>
+<br>
+<h4 class="agendMenu" *ngIf="user.type=='admin'">Dodaj stavku u agendu</h4>
+
+<div class="agendMenu" *ngIf="user.type=='admin'">
+<table>
+  <tr>
+    <td>Dan:</td>
+    <td>
+        <select [(ngModel)]="dayNumber" class="input-field" [class.invalid]="errorDayNumber">
+          <option [value]="a.day" *ngFor="let a of agenda">Dan {{a.day}}</option>
+          <option *ngIf="errorDayNumber" value="" disabled selected hidden>{{errorDayNumber}}</option>
+
+        </select>
+    </td>
+</tr>
+<tr>
+  <td>Pocetak:</td>
+  <td><input type="time" [(ngModel)]="startTime" class="input-field" [class.invalid]="errorNewStartTime"></td>
+
+</tr>
+<tr>  <td colspan="2" *ngIf='errorNewStartTime' class="errorClass">{{errorNewStartTime}}</td>
+</tr>
+<tr>
+  <td>Kraj:</td>
+  <td><input type="time" [(ngModel)]="endTime" class="input-field" [class.invalid]="errorNewEndTime"></td>
+
+</tr>
+<tr>  <td colspan="2" *ngIf='errorNewEndTime' class="errorClass">{{errorNewEndTime}}</td>
+</tr>
+<tr>
+  <td>Naslov:</td>
+  <td><input type="text" [(ngModel)]="title" class="input-field" [class.invalid]="errorNewTitle"></td>
+</tr>
+<tr>  <td colspan="2" *ngIf='errorNewTitle' class="errorClass">{{errorNewTitle}}</td>
+</tr>
+<tr>
+  <td>Predavac:</td>
+  <td><input type="text" [(ngModel)]="lecturer" class="input-field"></td>
+</tr>
+<tr>
+  <td></td>
+  <td><button mat-raised-button color="primary" (click)="addAgend()">Dodaj</button></td>
+  <td></td>
+</tr>
+</table>
+
+</div>
+<div *ngIf="addedMessage" class="agendMenu" [class.errorClass]="!addedAgend" [class.successClass]="addedAgend" >
+{{addedMessage}}
+</div>

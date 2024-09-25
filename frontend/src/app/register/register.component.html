@@ -1,0 +1,123 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a routerLink="">Pocetna</a>
+  </div>
+  <div class="col">
+  <a (click)="goToLostPassword()">Zaboravljena lozinka</a>
+  </div>
+</div>
+<br>
+<div class="container-fluid">
+
+<div class="registerMenu">
+  <div class="row">
+  <table>
+
+
+      <tr>
+          <td>Ime:</td>
+          <td><input type="text" name="firstname" [(ngModel)]="firstname" class="input-field" [placeholder]="errorFirstname" [class.invalid]="errorFirstname"></td>
+      </tr>
+      <tr>
+          <td>Prezime:</td>
+          <td><input type="text" name="lastname" [(ngModel)]="lastname" class="input-field" [class.invalid]="errorLastname" [placeholder]="errorLastname"></td>
+      </tr>
+      <tr>
+        <td>Drzava:</td>
+        <td>
+            <select name="country" [(ngModel)]="country" (change)="facultiesOfCountries()" class="input-field" [class.invalid]="errorCountry" >
+                <option [value]="countryOf.name" *ngFor="let countryOf of countries">{{countryOf.name}}</option>
+                <option *ngIf="errorCountry" value="" disabled selected hidden>{{errorCountry}}</option>
+
+            </select>
+        </td>
+    </tr>
+      <tr>
+          <td>Fakultet:</td>
+          <select name="faculty" [(ngModel)]="faculty" class="input-field" [class.invalid]="errorFaculty">
+            <option [value]="facultyOf" *ngFor="let facultyOf of faculties">{{facultyOf}}</option>
+
+            <option [value]='"other"'>Ostalo</option>
+            <option *ngIf="errorFaculty" value="" disabled selected hidden>{{errorFaculty}}</option>
+
+        </select>
+      </tr>
+      <tr>
+        <td>Godina:</td>
+        <select name="year" [(ngModel)]="year" class="input-field" [class.invalid]="errorYear">
+          <option value=1 >Prva</option>
+          <option value=2 >Druga</option>
+          <option value=3 >Treca</option>
+          <option value=4 >Cetvrta</option>
+          <option value=5 >Master studije</option>
+          <option value=6 >Doktorske studije</option>
+          <option *ngIf="errorYear" value="" disabled selected hidden>{{errorYear}}</option>
+
+      </select>
+    </tr>
+      <tr>
+        <td>Smer:</td>
+        <td>
+            <select name="department" [(ngModel)]="department" class="input-field" [class.invalid]="errorDepartment">
+                <option value="ir">Racunarska tehnika i elektrotehnika</option>
+                <option value="og">Energetika</option>
+                <option value="oe">Elektronika</option>
+                <option value="si">Softverski inzinjering</option>
+                <option value="of">Fizicka elektronika</option>
+                <option value="ot">Telekomunikacije i informacione tehnologije</option>
+                <option value="os">Signali i sitemi</option>
+                <option value="other">Ostalo</option>
+                <option *ngIf="errorDepartment" value="" disabled selected hidden>{{errorDepartment}}</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+      <td>Indeks:</td>
+      <td><input type="text" name="index" [(ngModel)]="index" class="input-field" [class.invalid]="errorIndex" [placeholder]="errorIndex"></td>
+  </tr>
+  <tr *ngIf="errorIndex!='Obavezno polje'" class="errorClass">
+    <td colspan="2">{{errorIndex}}</td>
+  </tr>
+  <tr>
+    <td>Telefon:</td>
+    <td><input type="tel" name="telephone" [(ngModel)]="telephone" placeholder="+3..." class="input-field" [class.invalid]="errorTelephone" ></td>
+  </tr>
+    <tr *ngIf="errorTelephone" class="errorClass">
+      <td colspan="2">{{errorTelephone}}</td>
+    </tr>
+
+      <tr>
+          <td>Elektronska pošta:</td>
+          <td><input type="text" name="email" [(ngModel)]="email" class="input-field" [class.invalid]="errorEmail" [placeholder]="errorEmail"></td>
+      </tr>
+      <tr *ngIf="errorEmail!='Obavezno polje'" class="errorClass">
+        <td colspan="2">{{errorEmail}}</td>
+      </tr>
+      <tr>
+        <td>Lozinka:</td>
+        <td><input type="password" name="password" [(ngModel)]="password" class="input-field" [class.invalid]="errorPassword" [placeholder]="errorPassword"></td>
+    </tr>
+    <tr *ngIf="errorPassword!='Obavezno polje'" class="errorClass">
+      <td colspan="2">{{errorPassword}}</td>
+    </tr>
+    <tr>
+        <td>Potvrdi lozinku:</td>
+        <td><input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="input-field" [class.invalid]="errorConfirmPassword" [placeholder]="errorConfirmPassword"></td>
+    </tr>
+    <tr *ngIf="errorConfirmPassword!='Obavezno polje'" class="errorClass">
+      <td colspan="2">{{errorConfirmPassword}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button mat-raised-button color="primary" (click)="register()">Registruj se</button></td>
+      <td></td>
+  </tr>
+  </table>
+</div>
+</div>
+<br>
+<div *ngIf="alertMessage" class="registerMenu" [class.successClass]="addedUser" [class.errorClass]="!addedUser">
+  {{alertMessage}}
+</div>
+</div>

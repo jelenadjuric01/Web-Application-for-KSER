@@ -1,0 +1,89 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()">Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div class="table-responsive" *ngIf="news.length>0 && user.type!='admin'" >
+
+    <table *ngFor="let n of news">
+      <tr>
+       <td><h4>{{n.title}}</h4></td>
+      </tr>
+      <tr>
+        <td>{{ n.timestamp | date:'dd/MM/yyyy HH:mm' }}</td>
+
+      </tr>
+      <tr>
+       <td>{{n.description.slice(0,50)}}{{n.description.length>50?"...":""}}</td>
+      </tr>
+      <tr>
+       <td>    <button mat-raised-button color="primary" (click)="goToNewsView(n)">Otvori vest</button>
+       </td>
+        </tr>
+    </table>
+
+</div>
+<div class="newsMenu" *ngIf="user.type!='admin' && news.length==0"> Trenutno nema vesti.</div>
+<br>
+<div class="container-fluid d-flex justify-content-center align-items-center full-height" *ngIf="user.type=='admin' && news.length>0">
+  <div>
+    <h4 class="text-center">Vesti</h4>
+
+
+  <table *ngFor="let n of news">
+    <tr>
+      <td>Naslov:</td>
+      <td><input type="text" [(ngModel)]="n.title" class="input-field" [class.invalid]="n.errorTitle" [placeholder]="n.errorTitle"></td>
+    </tr>
+    <tr>
+      <td>Tekst:</td>
+      <td><textarea [(ngModel)]="n.description" class="input-field" [class.invalid]="n.errorDescription" [placeholder]="n.errorDescription"></textarea></td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary" (click)="updateNews(n)">Uredi vest</button></td>
+      <td><button mat-raised-button color="primary" (click)="deleteNews(n)">Obrisi vest</button></td>
+
+    </tr>
+  </table>
+  </div>
+</div>
+<br>
+<h4 class="newsMenu" *ngIf="user.type=='admin'">Dodaj vest</h4>
+<div class="newsMenu" *ngIf="user.type=='admin'">
+
+  <table>
+    <tr>
+      <td>Naslov:</td>
+      <td><input type="text" [(ngModel)]="title" class="input-field" [class.invalid]="errorTitle" [placeholder]="errorTitle"></td>
+    </tr>
+    <tr>
+      <td>Tekst:</td>
+      <td><textarea [(ngModel)]="description" class="input-field" [class.invalid]="errorDescription" [placeholder]="errorDescription"></textarea></td>
+    </tr>
+    <tr>
+      <td><button mat-raised-button color="primary" (click)="addNews()">Dodaj vest</button></td>
+    </tr>
+  </table>
+</div>
+<div *ngIf="alertMessage" class="newsMenu" [class.errorClass]="!addedNews" [class.successClass]="addedNews" >
+  {{alertMessage}}
+  </div>

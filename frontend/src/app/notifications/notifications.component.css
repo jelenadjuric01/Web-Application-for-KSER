@@ -1,0 +1,133 @@
+.notificationMenu{
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+.invalid {
+  border: 1px solid red;
+}
+
+.table-responsive table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-responsive th,
+.table-responsive td {
+  padding: 8px;
+  text-align: center;
+}
+
+.errorClass {
+  color: red;
+}
+
+.successClass {
+  color: green;
+}
+
+nav {
+  align-items: center;
+  display: flex;
+  gap: 3.5em;
+}
+
+.navT {
+  border-bottom: 2px solid grey;
+  color: grey;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  text-decoration: none;
+  transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -webkit-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -moz-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -o-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+}
+
+.navbar {
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.navbar .col {
+  flex: 1 1 auto; /* Allow columns to grow and shrink as needed */
+  text-align: center;
+  padding: 10px;
+}
+
+.navbar a {
+  border-bottom: 2px solid grey;
+  color: grey;
+  font-size: 18px;
+  font-weight: 600;
+  padding-bottom: 5px;
+  text-decoration: none;
+  transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -webkit-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -moz-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+  -o-transition: border 0.12s ease-in-out, color 0.12s ease-in-out;
+}
+
+.navbar a:hover {
+  border-bottom-color: red;
+  color: darkblue;
+}
+
+.navbar a.unread-notification {
+  border-bottom-color: darkblue;
+  color: red;
+}
+
+.input-field {
+  width: 80%;
+}
+
+@media screen and (max-width: 600px) {
+  .table-responsive thead {
+    display: none;
+  }
+
+  .table-responsive tr {
+    display: block;
+  }
+
+  .table-responsive td {
+    display: block;
+    text-align: center;
+    position: relative;
+  }
+
+  .table-responsive td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .navbar {
+    flex-direction: column; /* Stack columns vertically */
+    padding: 10px;
+  }
+
+  .navbar .col {
+    flex: 1 1 100%; /* Make each column take full width */
+    text-align: center;
+  }
+
+  .navbar a {
+    padding-bottom: 10px;
+  }
+}

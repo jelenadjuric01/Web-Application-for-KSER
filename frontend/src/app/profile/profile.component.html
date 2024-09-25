@@ -1,0 +1,191 @@
+<div class="navbar text-center">
+  <div class="col">
+  <a (click)="goToProfile()">Profil</a>
+  </div>
+  <div class="col">
+  <a (click)="goToAgenda()">Agenda</a>
+  </div>
+  <div class="col">
+  <a (click)="goToMap()">Mapa</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNews()">Vesti</a>
+  </div>
+  <div class="col">
+  <a (click)="goToNotifications()" [ngClass]="{'unread-notification': !read}">Obavestenja</a>
+  </div>
+  <div class="col" *ngIf="determineApply()">
+  <a (click)="goToApply()" >Prijavi se</a>
+  </div>
+  <div class="col">
+  <a (click)="logout()">Izloguj se</a>
+  </div>
+</div>
+<br>
+<div class="container-fluid">
+<div class="profileMenu">
+  <table>
+
+
+      <tr>
+          <td>Ime:</td>
+          <td><input type="text" name="firstname" [(ngModel)]="firstname" class="input-field" [placeholder]="errorFirstname" [class.invalid]="errorFirstname"></td>
+      </tr>
+      <tr>
+          <td>Prezime:</td>
+          <td><input type="text" name="lastname" [(ngModel)]="lastname" class="input-field" [placeholder]="errorLastname" [class.invalid]="errorLastname"></td>
+      </tr>
+      <tr>
+        <td>Drzava:</td>
+        <td>
+            <select name="country" [(ngModel)]="country" (change)="facultiesOfCountries()" class="input-field" [class.invalid]="errorCountry">
+                <option [value]="countryOf.name" *ngFor="let countryOf of countries">{{countryOf.name}}</option>
+                <option *ngIf="errorCountry" value="" disabled selected hidden>{{errorCountry}}</option>
+
+            </select>
+        </td>
+    </tr>
+      <tr>
+          <td>Fakultet:</td>
+          <select name="faculty" [(ngModel)]="faculty" class="input-field" [class.invalid]="errorFaculty">
+            <option [value]="facultyOf" *ngFor="let facultyOf of faculties">{{facultyOf}}</option>
+
+            <option [value]='"other"'>Ostalo</option>
+            <option *ngIf="errorFaculty" value="" disabled selected hidden>{{errorFaculty}}</option>
+
+        </select>
+      </tr>
+      <tr>
+        <td>Godina:</td>
+        <select name="year" [(ngModel)]="year" class="input-field" [class.invalid]="errorYear">
+          <option value=1 >Prva</option>
+          <option value=2 >Druga</option>
+          <option value=3 >Treca</option>
+          <option value=4 >Cetvrta</option>
+          <option value=5 >Master studije</option>
+          <option value=6 >Doktorske studije</option>
+          <option *ngIf="errorYear" value="" disabled selected hidden>{{errorYear}}</option>
+
+      </select>
+    </tr>
+      <tr>
+        <td>Smer:</td>
+        <td>
+            <select name="department" [(ngModel)]="department" class="input-field" [class.invalid]="errorDepartment">
+                <option value="ir">Racunarska tehnika i elektrotehnika</option>
+                <option value="og">Energetika</option>
+                <option value="oe">Elektronika</option>
+                <option value="si">Softverski inzinjering</option>
+                <option value="of">Fizicka elektronika</option>
+                <option value="ot">Telekomunikacije i informacione tehnologije</option>
+                <option value="os">Signali i sitemi</option>
+                <option value="other">Ostalo</option>
+                <option *ngIf="errorDepartment" value="" disabled selected hidden>{{errorDepartment}}</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+      <td>Indeks:</td>
+      <td><input type="text" name="index" [(ngModel)]="index" class="input-field" [placeholder]="errorIndex" [class.invalid]="errorIndex"></td>
+  </tr>
+  <tr *ngIf="errorIndex!='Obavezno polje'" class="errorClass">
+    <td colspan="2">{{errorIndex}}</td>
+  </tr>
+  <tr>
+    <td>Telefon:</td>
+    <td><input type="tel" name="telephone" [(ngModel)]="telephone" placeholder="+3..." class="input-field" [class.invalid]="errorTelephone"></td>
+</tr>
+<tr *ngIf="errorTelephone" class="errorClass">
+  <td colspan="2">{{errorTelephone}}</td>
+</tr>
+
+      <tr>
+        <td>Stara lozinka:</td>
+        <td><input type="password" name="oldPassword" [(ngModel)]="oldPassword" class="input-field" [placeholder]="errorOldPassword" [class.invalid]="errorOldPassword"></td>
+    </tr>
+    <tr *ngIf="errorOldPassword!='Obavezno polje'" class="errorClass">
+      <td colspan="2">{{errorOldPassword}}</td>
+    </tr>
+    <tr>
+      <td>Nova lozinka:</td>
+      <td><input type="password" name="password" [(ngModel)]="password" class="input-field" [placeholder]="errorPassword" [class.invalid]="errorPassword"></td>
+  </tr>
+  <tr *ngIf="errorPassword!='Obavezno polje'" class="errorClass">
+    <td colspan="2">{{errorPassword}}</td>
+  </tr>
+    <tr>
+        <td>Potvrdi novu lozinku:</td>
+        <td><input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" class="input-field" [placeholder]="errorConfirmPassword" [class.invalid]="errorConfirmPassword"></td>
+    </tr>
+    <tr *ngIf="errorConfirmPassword!='Obavezno polje'" class="errorClass">
+      <td colspan="2">{{errorConfirmPassword}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><button mat-raised-button color="primary" (click)="update()">Promeni podatke</button></td>
+      <td></td>
+  </tr>
+  </table>
+
+</div>
+<br>
+<div *ngIf="alertMessage" class="profileMenu" [class.successClass]="updatedUser" [class.errorClass]="!updatedUser">
+  {{alertMessage}}
+</div>
+<div class="profileMenu" *ngIf="user.type=='admin'">
+  Trenutno ima {{users.length}} registrovanih korisnika i {{registered.length}} prijavljenih.
+
+
+</div>
+</div>
+<br>
+<div class="container-fluid text-center" *ngIf="user.type=='admin'">
+  <div class="row profileMenu">
+      <div class="col">
+  <input type="text" name="searchName" [(ngModel)]="searchName" placeholder="Ime"><input type="text" name="searchLastame" [(ngModel)]="searchLastname" placeholder="Prezime">
+  <input type="text" name="searchEmail" [(ngModel)]="searchEmail" placeholder="Email"><button mat-raised-button color="primary" (click)="search()">Pretrazi</button>
+</div>
+  </div>
+</div>
+<br>
+
+<div class="table-responsive" *ngIf="user.type=='admin'">
+
+  <table *ngIf="searchedUsers.length>0">
+
+    <tr>
+      <td>Ime:</td>
+      <td>Prezime:</td>
+      <td> Email:</td>
+      <td>Organizator:</td>
+
+  </tr>
+
+
+
+    <tr *ngFor="let u of searchedUsers">
+        <td>{{u.firstname}}</td>
+        <td>{{u.lastname}}</td>
+        <td> {{u.email}}</td>
+        <td> <input type="checkbox" name="organizator" [(ngModel)] ="u.organizator" (change)="updateOrganizator($event,u)"></td>
+
+        <td><button mat-raised-button color="primary" (click)="deleteUser(u)">Obrisi</button></td>
+
+        <td><button mat-raised-button color="primary" (click)="cancel(u)" *ngIf="u.registered"> Otkazi prijavu</button></td>
+        <td *ngIf="u.registered">
+          <select name="package" [(ngModel)]="u.package" (change)="updatePackage(u)">
+            <option [value]="p.number" *ngFor="let p of availablePackages">{{p.name}} </option>
+            <option [value]="u.package" *ngIf="!packageAvailable(u.package)">{{findPackage(u.package)}}</option>
+
+          </select>
+        </td>
+
+    </tr>
+
+    </table>
+
+
+</div>
+<div class="row profileMenu" *ngIf="searchedUsers.length==0 && user.type=='admin'">Trenutno nema registrovanih korisnika.</div>
+
